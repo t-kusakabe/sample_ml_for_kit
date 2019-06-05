@@ -28,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: new AppBar(
             title: new Text("文字読み取り"),
         ),
-        body: SingleChildScorollView(
+        body: SingleChildScrollView(
             child: Column(
                 children: <Widget>[
                   _startCamera(),
@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _startCamera() {
-    return Contianer(
+    return Container(
         margin: EdgeInsets.only(top: 10.0),
         child: Row(
             children: <Widget>[
@@ -63,14 +63,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _onPickImageSelected() async {
-    var imageSource = Images
+    var imageSource = ImageSource.camera;
+
+    try {
+      final file = await ImagePicker.pickImage(source: imageSource);
+
+      if (file == null) {
+        throw Exception('ファイルを取得できませんでした');
+      }
+    } catch(e) {}
   }
 
-  try {
-    final file = await ImagePicker.pickImage(source: imageSource);
-
-    if (file == null) {
-      throw Exception('ファイルを取得できませんでしたか')
-    }
-  }
 }
